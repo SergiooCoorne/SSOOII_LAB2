@@ -5,50 +5,40 @@
 #include <thread>
 #include <queue>
 #include <fstream>
+#include <sstream>
+
+#include "SearchThread.cpp"
 
 using namespace std;
 
-pair<string, string> palabrasAnteriorYPosterior(const string& linea, const string& palabraBuscada) {
-    
-    pair<string, string> palabras;
 
-    // Encontrar la posición de la palabra buscada
-    size_t pos = linea.find(palabraBuscada);
-    if (pos == string::npos) {
-        // Si la palabra no se encuentra, devolver un par de cadenas vacías
-        return palabras;
+int main(int argc, char *argv[]){
+    /*if(argc != 4){
+        cout << "Error en los argumentos...\nSaliendo..." << endl;
+        exit(1);
     }
 
-    // Encontrar la palabra anterior
-    size_t posAnterior = linea.find(' ', pos);
-    if (posAnterior != string::npos) {
-        palabras.first = linea.substr(posAnterior + 1, pos - posAnterior - 1);
-    }
+    string file = argv[1];
+    string word = argv[2];
+    int n_threads = stoi(argv[3]);*/
 
-    // Encontrar la palabra posterior
-    size_t posPosterior = linea.find(' ', pos);
-    if (posPosterior != string::npos) {
-        palabras.second = linea.substr(posPosterior + 1, linea.find(' ', posPosterior + 1) - posPosterior - 1);
-    }
 
-    return palabras;
-}
-
-int main(){
     priority_queue <thread> pq;
 
-    std::string linea;
-    std::string palabraBuscada;
+    SearchThread st1(1, 1, 5, "esto");
+    SearchThread st2(2, 6, 11, "esto");
+    /*st1.search();
+    st1.toStringResults();*/
+    
+    thread hilo1(st1);
+    thread hilo2(st2);
 
-    std::cout << "Introduce una línea de texto: ";
-    std::getline(std::cin, linea);
+    hilo1.join();
+    hilo2.join();
 
-    std::cout << "Introduce la palabra buscada: ";
-    std::cin >> palabraBuscada;
+    /*st1.toStringResults();
+    st2.toStringResults();*/
 
-    auto palabras = palabrasAnteriorYPosterior(linea, palabraBuscada);
-    std::cout << "Palabra anterior: " << palabras.first << std::endl;
-    std::cout << "Palabra posterior: " << palabras.second << std::endl;
 
     return 0;
 
