@@ -11,6 +11,7 @@
 
 using namespace std;
 
+int count_lines_file(string file_name);
 
 int main(int argc, char *argv[]){
     /*if(argc != 4){
@@ -42,4 +43,14 @@ int main(int argc, char *argv[]){
 
     return 0;
 
+}
+
+int count_lines_file(string file_name){
+    ifstream file(file_name);
+    string line;
+    int n_line = 0;
+    while (getline(file, line)) {
+        n_line++;
+    }
+    return n_line;
 }
