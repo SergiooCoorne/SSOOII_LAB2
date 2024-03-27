@@ -23,3 +23,10 @@ Las reglas son las siguientes:
 * Libro6 --> _El_Oro_Y_La_Ceniza_-_Abecassis_Eliette.txt_
 * Libro7 --> _SEAMOS_PERSONAS_DE_INFLUENCIA_-_JOHN_MAXWELL.txt_
 * Libro8 --> _VIVE_TU_SUEÑO_-_JOHN_MAXWELL.txt_
+
+Para compilar, unicamente hay que ejecutar **make**, y si se quiere ejecutar cualquier regla, se ejecuta **make "_Nombre_Regla"_**
+
+## Otras ejecuciones
+Si se quiere buscar otras palabras con otro número de hilos existen dos opciones.
+* Modificar la regla del libro que se quiera buscar para ajustarla a las necesidades
+* Ejecutar directamente el ejecutable que está en la carpeta /exec, quedando de esta manera ./exec/SSOOIIGLE _"Libro_Deseado"_ _"Palabra_Deseada"_ _"Numero_Hilos"_
