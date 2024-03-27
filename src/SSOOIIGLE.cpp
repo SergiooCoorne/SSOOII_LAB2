@@ -11,6 +11,13 @@
 using namespace std;
 
 int count_lines_file(string file_name);
+void parse_argv(int argc, char *argv[]);
+void solution();
+bool fileExists(string& filename);
+
+string file_name;
+string word;
+int n_threads;
 
 struct CompareSearchThread {
     bool operator()(const SearchThread& st1, const SearchThread& st2) const {
@@ -20,14 +27,14 @@ struct CompareSearchThread {
 };
 
 int main(int argc, char *argv[]) {
-    if(argc != 4){
-        cout << "Error en el nnúmero de argumentos argumentos...\nSaliendo..." << endl;
-        exit(1);
-    }
-    string file_name = argv[1];
-    string word = argv[2];
-    int n_threads = stoi(argv[3]);
+    parse_argv(argc,argv);
+    solution();
     
+    return 0;
+}
+
+void solution(){
+
     if(fileExists(file_name) == false){
         cout << "El archivo no existe...\nSaliendo..." << endl;
         exit(1);
@@ -51,8 +58,6 @@ int main(int argc, char *argv[]) {
         searchThreadsQueue.push(SearchThread(i, start_line, end_line, word, file_name));
         start_line = end_line + 1;
     }
-
-    
 
     vector<SearchThread> searchThreadsCopy; /*Creamos un vector para sacar los elementos de la cola con prioridad y manejarlos*/
 
@@ -81,8 +86,17 @@ int main(int argc, char *argv[]) {
     for (auto& st : searchThreadsCopy) {
         st.toStringResults();
     }
+}
 
-    return 0;
+void parse_argv(int argc, char *argv[]){
+    if(argc != 4){
+        cout << "Error en los argumentos...\nSaliendo..." << endl;
+        exit(1);
+    }
+
+    file_name = argv[1];
+    word = argv[2];
+    n_threads = stoi(argv[3]);
 }
 
 int count_lines_file(string file_name) {
@@ -97,5 +111,5 @@ int count_lines_file(string file_name) {
 
 bool fileExists(string& filename) {
     ifstream file(filename);
-    return file.good(); // La función good() devuelve true si el archivo existe y se puede abrir
+    return file.good(); /*Si no existe, devuelve FALSE*/
 }
