@@ -2,9 +2,6 @@
   * José Morán Galán
   * Sergio Cornejo Prieto
 
-## Modo de compilación y ejecución:
-Para compilar y ejecutar la práctica hemos creado un Makefile para simplificarnos la vida, por lo que solamente hay que ubicarse en la carpeta donde se encuentra el Makefile (teniendo los programas en CPP en la carpeta src) y hacer un make. Esto nos creará dos carpetas: la carpeta build con SSOOIIGLE.o y la carpeta bin con el ejecutable. Una vez realizado el make, solo hay que hacer ./bin.
-
 ## Consideraciones:
 * Cuando la palabra buscada se encuentra al principio o final de la línea, se pondrá "NULL" en la palabra anterior o posterior. Es decir, si se encuentra al principio de la línea, no tiene palabra anterior, por lo que se pondrá "NULL" "palabra buscada" "palabra posterior". De la misma manera, cuando se encuentra al final, siendo "NULL" la palabra posterior.
 
