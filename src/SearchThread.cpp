@@ -21,7 +21,7 @@
 
 using namespace std;
 
-mutex mtx;
+
 class SearchThread {
 private:
     queue<Result> results;
@@ -29,10 +29,10 @@ private:
     int index_first;
     int index_last;
     string word;
-    
+    string file_name;
 
 public:
-    SearchThread(int id, int index_first, int index_last, string word) : id(id), index_first(index_first), index_last(index_last), word(word) {}
+    SearchThread(int id, int index_first, int index_last, string word, string file_name) : id(id), index_first(index_first), index_last(index_last), word(word), file_name(file_name) {}
 
     void operator()() {
         search();
@@ -43,7 +43,7 @@ public:
     }
 
     void search() {
-        ifstream file("text.txt");
+        ifstream file(file_name);
         string line;
         int n_line = 0;
         while (getline(file, line)) {
@@ -53,8 +53,8 @@ public:
                 if (found != string::npos) { /*Comprobamos que la palabra que buscamos esta en la linea*/
                     /*Sacamos un vector de resultados por si aparece mas de una vez la palabra en la linea*/
                     vector<pair<string, string>> results_array = word_before_and_after(line, word);
-                    for (int i = 0; i < results_array.size(); i++) { /*Recorremos el vectro sacando los resultados por linea e introduciendo los resultados en la cola de resultados*/
-                        /*cout << "Thread " << id << " found word " << word << " in line " << n_line << " with word before and after: " << results_array[i].first << " " << results_array[i].second << endl;*/
+                    int size_array = results_array.size();
+                    for (int i = 0; i < size_array; i++) { /*Recorremos el vectro sacando los resultados por linea e introduciendo los resultados en la cola de resultados*/
                         Result sr(n_line, results_array[i].first, results_array[i].second);
                         results.push(sr);
                     }
@@ -101,7 +101,6 @@ public:
         srand(time(0) + id);
         string randomColor = colors[rand() % 7];
 
-        lock_guard<mutex> lock(mtx);
         while (!results.empty()) {
             Result sr = results.front();
             results.pop();
