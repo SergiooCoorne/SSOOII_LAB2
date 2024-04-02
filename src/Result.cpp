@@ -9,6 +9,8 @@
 
 using namespace std;
 
+/*Clase que guardara objetos cuyos atributos son el numero de linea, la palabra anterior y posterior de la palabra que se esta buscando*/
+
 class Result{
     private:
         int n_line;

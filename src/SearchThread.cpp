@@ -10,6 +10,7 @@
 
 #include "Result.cpp"
 
+/*Colores para que cada hilo imprima sus linea de un color aleatorio*/
 #define RESET   "\033[0m"
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
@@ -21,10 +22,11 @@
 
 using namespace std;
 
+/*Clase de la cual se crean los objetos que se le pasan a los hilos, para que cada hilo procese de manera independiente las lineas y los datos correspondientes*/
 
 class SearchThread {
 private:
-    queue<Result> results;
+    queue<Result> results; /*Cola de objetos de tipo "Result"*/
     int id;
     int index_first;
     int index_last;
@@ -42,6 +44,7 @@ public:
         return id;
     }
 
+    /*Metodo principal que se encarga de hacer la busqueda de las palabras y de sacar la informacion correspondiente a la misma*/
     void search() {
         ifstream file(file_name);
         string line;
@@ -54,7 +57,7 @@ public:
                     /*Sacamos un vector de resultados por si aparece mas de una vez la palabra en la linea*/
                     vector<pair<string, string>> results_array = word_before_and_after(line, word);
                     int size_array = results_array.size();
-                    for (int i = 0; i < size_array; i++) { /*Recorremos el vectro sacando los resultados por linea e introduciendo los resultados en la cola de resultados*/
+                    for (int i = 0; i < size_array; i++) { /*Recorremos el vector sacando los resultados por linea e introduciendo los resultados en la cola de resultados*/
                         Result sr(n_line, results_array[i].first, results_array[i].second);
                         results.push(sr);
                     }
@@ -63,6 +66,8 @@ public:
         }
     }
 
+
+    /*Metodo que nos devuelve la palabra anterior y posterior de una linea pasandole la linea y la palabra que estamos buscando*/
     vector<pair<string, string>> word_before_and_after(const string& linea, const string& palabraBuscada) {
         vector<pair<string, string>> results_array; /*Vector donde iran los pares de palabras de resultados*/
         pair<string, string> result; /*Par de palabras que seran el resultado de la busqueda*/
@@ -95,6 +100,7 @@ public:
         return results_array;
     }
 
+    /*Metodo para mostrar toda la informacion correspondiente a la palabra que se esta buscando*/
     void toStringResults() {
         /*Vector de colores para que cada hilo imprima de un color diferente*/
         const string colors[] = {RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE};
